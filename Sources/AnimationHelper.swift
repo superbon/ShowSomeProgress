@@ -92,7 +92,7 @@ extension AnimatedUIView {
             return
         }
 
-        let timing: CAMediaTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        let timing: CAMediaTimingFunction = CAMediaTimingFunction(name: "easeOut")
         CATransaction.begin()
         CATransaction.setAnimationTimingFunction(timing)
         animatedLayer.progress = progress

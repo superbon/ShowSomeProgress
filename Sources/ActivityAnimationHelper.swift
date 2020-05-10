@@ -21,7 +21,11 @@ extension AnimatedActivityUIView {
 
     public func startAnimation() {
         guard timer == nil else { return } // if timer is not nill, the animation is already running
-        timer = Timer.scheduledTimer(withTimeInterval: frameRate, repeats: true) { _ in self.animationStep() }
+        if #available(iOS 10.0, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: frameRate, repeats: true) { _ in self.animationStep() }
+        } else {
+            timer = Timer.scheduledTimer(timeInterval: frameRate, invocation: .init(), repeats: true)
+        }
     }
 
     public func stopAnimation() {
