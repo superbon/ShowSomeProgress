@@ -17,16 +17,16 @@ public class ProgressStyleKit : NSObject {
 
     //// Drawing Methods
 
-    @objc dynamic public class func drawProgressBarDisplay(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: 136, height: 16), resizing: ResizingBehavior = .aspectFit, progress: CGFloat = 0.723, showTriangle: Bool = true, progressColorRed: CGFloat = 0, progressColorGreen: CGFloat = 0.475, progressColorBlue: CGFloat = 1) {
+    @objc dynamic public class func drawProgressBarDisplay(frame targetFrame: CGRect = CGRect(x: 0, y: 0, width: self.bounds, height: 16), resizing: ResizingBehavior = .aspectFit, progress: CGFloat = 0.723, showTriangle: Bool = true, progressColorRed: CGFloat = 0, progressColorGreen: CGFloat = 0.475, progressColorBlue: CGFloat = 1) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
         
         //// Resize to Target Frame
         context.saveGState()
-        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: 136, height: 16), target: targetFrame)
+        let resizedFrame: CGRect = resizing.apply(rect: CGRect(x: 0, y: 0, width: self.bounds, height: 16), target: targetFrame)
         context.translateBy(x: resizedFrame.minX, y: resizedFrame.minY)
         context.scaleBy(x: resizedFrame.width / 136, y: resizedFrame.height / 16)
-        let resizedShadowScale: CGFloat = min(resizedFrame.width / 136, resizedFrame.height / 16)
+        let resizedShadowScale: CGFloat = min(resizedFrame.width / self.bounds, resizedFrame.height / 16)
 
 
 
@@ -38,7 +38,7 @@ public class ProgressStyleKit : NSObject {
 
         //// Variable Declarations
         let percentText = "\(Int(round(round(progress * 100))))" + "%"
-        let progressWidth: CGFloat = 136 * progress
+        let progressWidth: CGFloat = self.bounds * progress
         let progressWidthOffset: CGFloat = progressWidth - 3.5
         let progressVisible = progress > 0
         let progressBarColor = UIColor(red: progressColorRed, green: progressColorGreen, blue: progressColorBlue, alpha: 1)
@@ -48,7 +48,7 @@ public class ProgressStyleKit : NSObject {
         context.setAlpha(0.2)
         context.beginTransparencyLayer(auxiliaryInfo: nil)
 
-        let rectangle2Path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 136, height: 9), cornerRadius: 3)
+        let rectangle2Path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.bounds, height: 9), cornerRadius: 3)
         context.saveGState()
         context.setShadow(offset: CGSize(width: shadow.shadowOffset.width * resizedShadowScale, height: shadow.shadowOffset.height * resizedShadowScale), blur: shadow.shadowBlurRadius * resizedShadowScale, color: (shadow.shadowColor as! UIColor).cgColor)
         progressBarColor.setFill()
@@ -65,7 +65,7 @@ public class ProgressStyleKit : NSObject {
         context.beginTransparencyLayer(auxiliaryInfo: nil)
 
         //// Clip Rectangle 3
-        let rectangle3Path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 136, height: 9), cornerRadius: 3)
+        let rectangle3Path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.bounds, height: 9), cornerRadius: 3)
         rectangle3Path.addClip()
 
 
@@ -84,7 +84,7 @@ public class ProgressStyleKit : NSObject {
         //// Text Drawing
         let textRect = CGRect(x: 3, y: 0, width: 130, height: 9)
         let textStyle = NSMutableParagraphStyle()
-        textStyle.alignment = .center
+        textStyle.alignment = .right
         let textFontAttributes = [
             .font: UIFont.systemFont(ofSize: 7),
             .foregroundColor: UIColor.black,
